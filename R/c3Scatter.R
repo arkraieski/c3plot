@@ -44,7 +44,9 @@ c3plot <- function(x, ...) {
 #' c3plot(mtcars$hp, mtcars$qsec)
 #' c3plot(mtcars$disp, mtcars$hp, main = "Displacement vs. HP in mtcars")
 #' @export
-c3plot.default <- function(x, y, type  = "p", main = NULL, xlab = NULL, ylab = NULL, zoom = TRUE, ...){
+#' @importFrom grDevices colors
+#' @importFrom gplots col2hex
+c3plot.default <- function(x, y, type  = "p", main = NULL, xlab = NULL, ylab = NULL, zoom = TRUE, col = NULL, ...){
   if(type == "p"){
     plot_type <- "scatter"
     show_points <- TRUE
@@ -64,6 +66,23 @@ c3plot.default <- function(x, y, type  = "p", main = NULL, xlab = NULL, ylab = N
   if(is.null(xlab)) xlab <- deparse(substitute(x))
   if(is.null(ylab)) ylab <- deparse(substitute(y))
 
+  if(!is.null(col)){
+    if(!is.character(col)){
+      stop("col must be a character vector", call. = FALSE)
+    }
+    if(length(col) == 1) {
+      if(grepl("^#(?:[0-9a-fA-F]{3}){1,2}$", col)){
+        col_hex <- col
+        } else if(col %in% colors()) {
+        col_hex <- col2hex(col)
+        } else {
+          stop("Invalid colors in col. Run colors() to see all supported color names", call. = FALSE)
+        }
+    }
+  } else {
+    col_hex <- NULL
+  }
+
   data <- list(x = x,
                y = y,
                plot_type = plot_type,
@@ -71,7 +90,8 @@ c3plot.default <- function(x, y, type  = "p", main = NULL, xlab = NULL, ylab = N
                xlab = xlab,
                ylab = ylab,
                show_points = show_points,
-               zoom = zoom)
+               zoom = zoom,
+               col_hex = col_hex)
 
   c3Scatter(data, ...)
 }

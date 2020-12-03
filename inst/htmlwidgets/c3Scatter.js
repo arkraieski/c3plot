@@ -25,7 +25,8 @@ HTMLWidgets.widget({
                 // when tab hidden el.get... returns 0
                 //var w = el.getBoundingClientRect().width;
                 //var h = el.getBoundingClientRect().height;
-
+                var color = {};
+                color[x.data.ylab] = x.data.col_hex;
 
                 var chart = c3.generate({
                     bindto: el,
@@ -35,7 +36,8 @@ HTMLWidgets.widget({
                             xCol,
                             yCol
                         ],
-                        type: plotType
+                        type: plotType,
+                        colors: color
                     },
                     point : {
                       show: x.data.show_points
