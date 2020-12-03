@@ -4,8 +4,14 @@
 \alias{c3pie}
 \title{C3 Pie Charts}
 \usage{
-c3pie(x, labels = names(x), col = NULL, width = NULL,
-  height = NULL, elementId = NULL)
+c3pie(
+  x,
+  labels = names(x),
+  col = NULL,
+  width = NULL,
+  height = NULL,
+  elementId = NULL
+)
 }
 \arguments{
 \item{x}{a vector of non-negative numerical quantities. The values in x are displayed as the areas of pie slices.}

@@ -4,8 +4,16 @@
 \alias{c3plot.default}
 \title{The Default C3 Scatterplot Function}
 \usage{
-\method{c3plot}{default}(x, y, type = "p", main = NULL, xlab = NULL,
-  ylab = NULL, zoom = TRUE, ...)
+\method{c3plot}{default}(
+  x,
+  y,
+  type = "p",
+  main = NULL,
+  xlab = NULL,
+  ylab = NULL,
+  zoom = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{the x coordinates for the plot.}

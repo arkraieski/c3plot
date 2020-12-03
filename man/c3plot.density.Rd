@@ -4,8 +4,7 @@
 \alias{c3plot.density}
 \title{c3plot Method for  Kernel Density Estimation}
 \usage{
-\method{c3plot}{density}(x, main = NULL, xlab = NULL,
-  ylab = "Density", type = "l", ...)
+\method{c3plot}{density}(x, main = NULL, xlab = NULL, ylab = "Density", type = "l", ...)
 }
 \arguments{
 \item{x}{a "density" object}

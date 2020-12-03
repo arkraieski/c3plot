@@ -4,7 +4,7 @@
 \alias{c3plot.function}
 \title{Draw Function Plots with 'C3.js'}
 \usage{
-\method{c3plot}{function}(x, from = 0, to = 1, ylab = NULL, ...)
+\method{c3plot}{`function`}(x, from = 0, to = 1, ylab = NULL, ...)
 }
 \arguments{
 \item{x}{The name of a function.}
