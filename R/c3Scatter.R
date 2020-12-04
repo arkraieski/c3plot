@@ -35,6 +35,8 @@ c3plot <- function(x, ...) {
 #' @param xlab a label for the x axis, defaults to a description of x.
 #' @param ylab a label for the y axis, defaults to a description of y.
 #' @param zoom should the zooming feature (controlled my mouse wheel event) be enabled for the plot?
+#' @param col.group optionally, a factor the same length as \code{x} by which to group and color points
+#' @param col a color for plotting the points.
 #' @param ... arguments passed to \code{\link[htmlwidgets:createWidget]{htmlwidgets::createWidget()}}: \code{width}, \code{height}, and \code{elementId}. These arguments default to NULL.
 #'
 #' @method c3plot default
@@ -46,7 +48,7 @@ c3plot <- function(x, ...) {
 #' @export
 #' @importFrom grDevices colors
 #' @importFrom gplots col2hex
-c3plot.default <- function(x, y, type  = "p", main = NULL, xlab = NULL, ylab = NULL, zoom = TRUE, col = NULL, ...){
+c3plot.default <- function(x, y, type  = "p", main = NULL, xlab = NULL, ylab = NULL, zoom = TRUE, col.group = NULL, col = NULL, ...){
   if(type == "p"){
     plot_type <- "scatter"
     show_points <- TRUE
@@ -78,9 +80,34 @@ c3plot.default <- function(x, y, type  = "p", main = NULL, xlab = NULL, ylab = N
         } else {
           stop("Invalid colors in col. Run colors() to see all supported color names", call. = FALSE)
         }
-    }
+      } else {
+          if(is.null(col.group)){
+            stop("Argument col.groups must be specified to use multiple colors", call. = FALSE)
+          }
+          col_parsed <-  ifelse(col %in% colors(),
+                                col2hex(col),
+                                col)
+          if(any(!grepl("^#(?:[0-9a-fA-F]{3}){1,2}$", col_parsed))){
+            stop("Invalid colors in col. Run colors() to see all supported color names", call. = FALSE)
+          }
+
+          data_by_group <- split(data.frame(x, y), col.group)
+          group_names <- names(data_by_group)
+
+          grouped_data <- list(x = list(), y = list())
+          for(i in group_names){
+            grouped_data$x[[i]] <- data_by_group[[i]]$x
+            grouped_data$y[[i]] <- data_by_group[[i]]$y
+          }
+
+          col_hex <- col_parsed
+
+        }
+
   } else {
     col_hex <- NULL
+    group_names <- NULL
+    grouped_data <- NULL
   }
 
   data <- list(x = x,
@@ -91,7 +118,9 @@ c3plot.default <- function(x, y, type  = "p", main = NULL, xlab = NULL, ylab = N
                ylab = ylab,
                show_points = show_points,
                zoom = zoom,
-               col_hex = col_hex)
+               col_hex = col_hex,
+               group_names = group_names,
+               grouped_data = grouped_data)
 
   c3Scatter(data, ...)
 }
