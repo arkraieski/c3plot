@@ -71,6 +71,9 @@ HTMLWidgets.widget({
                         },
                         title: {
                             text: x.data.title
+                        },
+                        tooltip: {
+                            grouped: false
                         }
 
                     });
