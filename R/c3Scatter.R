@@ -91,6 +91,11 @@ c3plot.default <- function(x, y, type  = "p", main = NULL, xlab = NULL,
       stop("col must be a character vector", call. = FALSE)
     }
     if(length(col) == 1) {
+
+
+      group_names <- NULL
+      grouped_data <- NULL
+
       if(grepl("^#(?:[0-9a-fA-F]{3}){1,2}$", col)){
         col_hex <- col
         } else if(col %in% colors()) {
