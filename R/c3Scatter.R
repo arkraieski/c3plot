@@ -37,7 +37,9 @@ c3plot <- function(x, ...) {
 #' @param zoom logical; should the zooming feature (controlled my mouse wheel event) be enabled for the plot?
 #' @param col.group optionally, a factor the same length as \code{x} by which to group and color points.
 #' @param col The colors for the lines and points. If \code{col.group} is specified, this can be a vector of colors to use for each group in the data. If \code{NULL}, the C3 default colors are used.
-#' @param leg a title for the legend.
+#' @param legend.title a title for the legend.
+#' @param sci.x logical indicating whether scientific notation should be used for the x-axis.
+#' @param sci.y logical indicating whether scientific notation should be used for the x-axis.
 #' @param ... arguments passed to \code{\link[htmlwidgets:createWidget]{htmlwidgets::createWidget()}}: \code{width}, \code{height}, and \code{elementId}. These arguments default to NULL.
 #'
 #' @method c3plot default
@@ -51,7 +53,8 @@ c3plot <- function(x, ...) {
 #' @importFrom gplots col2hex
 c3plot.default <- function(x, y, type  = "p", main = NULL, xlab = NULL,
                            ylab = NULL, zoom = TRUE, col.group = NULL,
-                           col = NULL, leg = NULL, ...){
+                           col = NULL, legend.title = NULL, sci.x = FALSE,
+                           sci.y = FALSE, ...){
   if(type == "p"){
     plot_type <- "scatter"
     show_points <- TRUE
@@ -133,7 +136,7 @@ c3plot.default <- function(x, y, type  = "p", main = NULL, xlab = NULL,
     grouped_data <- NULL
     }
 
-  if(is.null(leg) & !is.null(col.group)) leg <- deparse(substitute(col.group))
+  if(is.null(legend.title) & !is.null(col.group)) legend.title <- deparse(substitute(col.group))
 
   data <- list(x = x,
                y = y,
@@ -146,7 +149,9 @@ c3plot.default <- function(x, y, type  = "p", main = NULL, xlab = NULL,
                col_hex = col_hex,
                group_names = group_names,
                grouped_data = grouped_data,
-               leg = leg)
+               leg = legend.title,
+               sci_x = sci.x,
+               sci_y = sci.y)
 
   c3Scatter(data, ...)
 }

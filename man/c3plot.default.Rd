@@ -14,7 +14,9 @@
   zoom = TRUE,
   col.group = NULL,
   col = NULL,
-  leg = NULL,
+  legend.title = NULL,
+  sci.x = FALSE,
+  sci.y = FALSE,
   ...
 )
 }
@@ -37,7 +39,11 @@
 
 \item{col}{The colors for the lines and points. If \code{col.group} is specified, this can be a vector of colors to use for each group in the data. If \code{NULL}, the C3 default colors are used.}
 
-\item{leg}{a title for the legend.}
+\item{legend.title}{a title for the legend.}
+
+\item{sci.x}{logical indicating whether scientific notation should be used for the x-axis.}
+
+\item{sci.y}{logical indicating whether scientific notation should be used for the x-axis.}
 
 \item{...}{arguments passed to \code{\link[htmlwidgets:createWidget]{htmlwidgets::createWidget()}}: \code{width}, \code{height}, and \code{elementId}. These arguments default to NULL.}
 }

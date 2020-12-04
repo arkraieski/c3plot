@@ -11,6 +11,30 @@ HTMLWidgets.widget({
         return {
 
             renderValue: function(x) {
+
+                var chart = {};
+                var color = {};
+
+
+                var xTickFormat = {};
+                if(x.data.sci_x){
+                    xTickFormat = {format: function(x) {return x.toExponential();},
+                        fit: false
+                    };
+                } else{
+                   xTickFormat = {
+                    fit: false
+
+                   };
+                }
+
+                var yTickFormat = {};
+                if(x.data.sci_y) {
+                    yTickFormat = {format: function(x) {return x.toExponential();}};
+                } else {
+                    yTickFormat = null ;
+                }
+
                 if (x.data.grouped_data === null) {
 
                     var xCol = x.data.x;
@@ -26,10 +50,10 @@ HTMLWidgets.widget({
                     // when tab hidden el.get... returns 0
                     //var w = el.getBoundingClientRect().width;
                     //var h = el.getBoundingClientRect().height;
-                    var color = {};
+
                     color[x.data.ylab] = x.data.col_hex;
 
-                    var chart = c3.generate({
+                    chart = c3.generate({
                         bindto: el,
                         data: {
                             x: "xCol",
@@ -50,16 +74,15 @@ HTMLWidgets.widget({
                                     position: "outer-center"
 
                                 },
-                                tick: {
-                                    fit: false
-                                }
+                                tick: xTickFormat
                             },
                             y: {
                                 label: {
                                     text: x.data.ylab,
                                     position: "outer-middle"
 
-                                }
+                                },
+                                tick: yTickFormat
                             }
                         },
                         legend: {
@@ -110,7 +133,7 @@ HTMLWidgets.widget({
 
                     console.log(myXs);
 
-                    var color = {};
+
                     if (!(x.data.col_hex === null)) {
 
                         x.data.group_names.forEach(function(group_names, index) {
@@ -121,7 +144,7 @@ HTMLWidgets.widget({
                     var allCols = xCols.concat(yCols);
 
 
-                    var chart = c3.generate({
+                    chart = c3.generate({
                         bindto: el,
                         data: {
                             xs: myXs,
@@ -139,16 +162,15 @@ HTMLWidgets.widget({
                                     position: "outer-center"
 
                                 },
-                                tick: {
-                                    fit: false
-                                }
+                                tick: xTickFormat
                             },
                             y: {
                                 label: {
                                     text: x.data.ylab,
                                     position: "outer-middle"
 
-                                }
+                                },
+                                tick: yTickFormat
                             }
                         },
                         legend: {
@@ -161,7 +183,11 @@ HTMLWidgets.widget({
                         },
                         title: {
                             text: x.data.title
+                        },
+                        tooltip: {
+                            grouped: false
                         }
+
 
                     });
                     var firstLegend = d3.select(".c3-legend-item");
@@ -171,7 +197,7 @@ HTMLWidgets.widget({
                         .append('text')
                         .text(x.data.leg)
                         .attr('y', legendY - 20)
-                        .attr("font-size", "12px")
+                        .attr("font-size", "12px");
                 }
 
             },
