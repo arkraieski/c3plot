@@ -37,6 +37,7 @@ c3plot <- function(x, ...) {
 #' @param zoom logical; should the zooming feature (controlled my mouse wheel event) be enabled for the plot?
 #' @param col.group optionally, a factor the same length as \code{x} by which to group and color points.
 #' @param col The colors for the lines and points. If \code{col.group} is specified, this can be a vector of colors to use for each group in the data. If \code{NULL}, the C3 default colors are used.
+#' @param leg a title for the legend.
 #' @param ... arguments passed to \code{\link[htmlwidgets:createWidget]{htmlwidgets::createWidget()}}: \code{width}, \code{height}, and \code{elementId}. These arguments default to NULL.
 #'
 #' @method c3plot default
@@ -48,7 +49,9 @@ c3plot <- function(x, ...) {
 #' @export
 #' @importFrom grDevices colors
 #' @importFrom gplots col2hex
-c3plot.default <- function(x, y, type  = "p", main = NULL, xlab = NULL, ylab = NULL, zoom = TRUE, col.group = NULL, col = NULL, ...){
+c3plot.default <- function(x, y, type  = "p", main = NULL, xlab = NULL,
+                           ylab = NULL, zoom = TRUE, col.group = NULL,
+                           col = NULL, leg = NULL, ...){
   if(type == "p"){
     plot_type <- "scatter"
     show_points <- TRUE
@@ -123,7 +126,9 @@ c3plot.default <- function(x, y, type  = "p", main = NULL, xlab = NULL, ylab = N
     col_hex <- NULL
     group_names <- NULL
     grouped_data <- NULL
-  }
+    }
+
+  if(is.null(leg) & !is.null(col.group)) leg <- deparse(substitute(col.group))
 
   data <- list(x = x,
                y = y,
@@ -135,7 +140,8 @@ c3plot.default <- function(x, y, type  = "p", main = NULL, xlab = NULL, ylab = N
                zoom = zoom,
                col_hex = col_hex,
                group_names = group_names,
-               grouped_data = grouped_data)
+               grouped_data = grouped_data,
+               leg = leg)
 
   c3Scatter(data, ...)
 }

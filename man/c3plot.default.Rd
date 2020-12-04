@@ -14,6 +14,7 @@
   zoom = TRUE,
   col.group = NULL,
   col = NULL,
+  leg = NULL,
   ...
 )
 }
@@ -35,6 +36,8 @@
 \item{col.group}{optionally, a factor the same length as \code{x} by which to group and color points.}
 
 \item{col}{The colors for the lines and points. If \code{col.group} is specified, this can be a vector of colors to use for each group in the data. If \code{NULL}, the C3 default colors are used.}
+
+\item{leg}{a title for the legend.}
 
 \item{...}{arguments passed to \code{\link[htmlwidgets:createWidget]{htmlwidgets::createWidget()}}: \code{width}, \code{height}, and \code{elementId}. These arguments default to NULL.}
 }

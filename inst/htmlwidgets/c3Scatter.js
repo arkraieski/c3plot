@@ -166,7 +166,7 @@ HTMLWidgets.widget({
                     var legendY = parseInt(firstLegend.select('text').attr('y'));
                     legendCon
                         .append('text')
-                        .text('Legend Title')
+                        .text(x.data.leg)
                         .attr('y', legendY - 20)
                         .attr("font-size", "12px")
                 }
