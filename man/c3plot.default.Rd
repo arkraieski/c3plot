@@ -12,6 +12,8 @@
   xlab = NULL,
   ylab = NULL,
   zoom = TRUE,
+  col.group = NULL,
+  col = NULL,
   ...
 )
 }
@@ -28,7 +30,11 @@
 
 \item{ylab}{a label for the y axis, defaults to a description of y.}
 
-\item{zoom}{should the zooming feature (controlled my mouse wheel event) be enabled for the plot?}
+\item{zoom}{logical; should the zooming feature (controlled my mouse wheel event) be enabled for the plot?}
+
+\item{col.group}{optionally, a factor the same length as \code{x} by which to group and color points.}
+
+\item{col}{The colors for the lines and points. If \code{col.group} is specified, this can be a vector of colors to use for each group in the data. If \code{NULL}, the C3 default colors are used.}
 
 \item{...}{arguments passed to \code{\link[htmlwidgets:createWidget]{htmlwidgets::createWidget()}}: \code{width}, \code{height}, and \code{elementId}. These arguments default to NULL.}
 }
