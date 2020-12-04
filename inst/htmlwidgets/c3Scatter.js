@@ -81,7 +81,7 @@ HTMLWidgets.widget({
                   console.log(yCols);
 
                   yCols.forEach(function(yCols, index){
-                      yCols.unshift(x.data.group_names[index])
+                      yCols.unshift(x.data.group_names[index]);
                   });
 
                  // yCols.forEach(function(yCols, index) {
@@ -107,15 +107,16 @@ HTMLWidgets.widget({
 
                    console.log(myXs);
 
-
-
                    var color = {};
+                   if(!(x.data.col_hex === null)){
+
                    x.data.group_names.forEach(function (group_names, index){
                        color[group_names] = x.data.col_hex[index];
                    });
-                   console.log(color);
+                   }
+
                    var allCols = xCols.concat(yCols);
-                   console.log(allCols);
+
 
                    var chart = c3.generate({
                        bindto: el,

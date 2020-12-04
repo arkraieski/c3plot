@@ -34,9 +34,9 @@ c3plot <- function(x, ...) {
 #' @param main a main title for the plot.
 #' @param xlab a label for the x axis, defaults to a description of x.
 #' @param ylab a label for the y axis, defaults to a description of y.
-#' @param zoom should the zooming feature (controlled my mouse wheel event) be enabled for the plot?
-#' @param col.group optionally, a factor the same length as \code{x} by which to group and color points
-#' @param col a color for plotting the points.
+#' @param zoom logical; should the zooming feature (controlled my mouse wheel event) be enabled for the plot?
+#' @param col.group optionally, a factor the same length as \code{x} by which to group and color points.
+#' @param col The colors for the lines and points. If \code{col.group} is specified, this can be a vector of colors to use for each group in the data. If \code{NULL}, the C3 default colors are used.
 #' @param ... arguments passed to \code{\link[htmlwidgets:createWidget]{htmlwidgets::createWidget()}}: \code{width}, \code{height}, and \code{elementId}. These arguments default to NULL.
 #'
 #' @method c3plot default
@@ -65,6 +65,21 @@ c3plot.default <- function(x, y, type  = "p", main = NULL, xlab = NULL, ylab = N
     stop('type must be "p", "l", or "b"', call. = FALSE)
   }
 
+  # function to split data by col.group
+  split_data_groups <- function(x, y, col.group) {
+    data_by_group <- split(data.frame(x, y), col.group)
+    group_names <<- names(data_by_group) # sorry
+
+    grouped_data <- list(x = list(), y = list())
+    for(i in group_names){
+      grouped_data$x[[i]] <- data_by_group[[i]]$x
+      grouped_data$y[[i]] <- data_by_group[[i]]$y
+    }
+    grouped_data
+  }
+
+
+
   if(is.null(xlab)) xlab <- deparse(substitute(x))
   if(is.null(ylab)) ylab <- deparse(substitute(y))
 
@@ -91,20 +106,20 @@ c3plot.default <- function(x, y, type  = "p", main = NULL, xlab = NULL, ylab = N
             stop("Invalid colors in col. Run colors() to see all supported color names", call. = FALSE)
           }
 
-          data_by_group <- split(data.frame(x, y), col.group)
-          group_names <- names(data_by_group)
 
-          grouped_data <- list(x = list(), y = list())
-          for(i in group_names){
-            grouped_data$x[[i]] <- data_by_group[[i]]$x
-            grouped_data$y[[i]] <- data_by_group[[i]]$y
-          }
+          group_names <- NULL # function call below will assign a value to this variable
+          grouped_data <- split_data_groups(x, y, col.group)
 
           col_hex <- col_parsed
 
         }
 
-  } else {
+  } else if(is.null(col) & !is.null(col.group)) {
+    group_names <- NULL # function call below will assign value to this variable
+    grouped_data <- split_data_groups(x, y, col.group)
+    col_hex <- NULL
+  }
+    else {
     col_hex <- NULL
     group_names <- NULL
     grouped_data <- NULL
