@@ -22,11 +22,12 @@ R is renowned for its graphical capabilities, and base R's 'graphics' package ma
 
 The c3plot package implements various plotting functions with similar names, arguments and behavior to their counterparts in base graphics, except the plots they create are interactive HTML widgets rendered using the  C3.js charting library. This makes it easy to generate interactive versions of common plots without the cognitive overhead of using/learning a plotting package with completely different arguments and syntax. This vignette will help you get started creating interactive visualizations with c3plot.
 
-The first step is to load the package:
+The first step is to install the package:
 
 
-```{r setup}
-library(c3plot)
+```{r eval=FALSE}
+# install.packages("devtools")
+devtools::install_github("arkraieski/c3plot")
 ```
 
 
@@ -38,6 +39,7 @@ The `c3plot()` function works much like base R's `plot()` function. To create a 
 First, let's create a basic scatter plot using base R as a refresher:
 
 ```{r fig.width = 4}
+library(c3plot)
 mtcars <- mtcars # R's Motor Trend Cars Dataset
 
 plot(x = mtcars$hp, y = mtcars$qsec)
@@ -115,6 +117,8 @@ c3plot(mtcars$hp, mtcars$mpg, col.group = mtcars$cyl,
 ```
 
 ## Pie charts
+
+Sometimes, your boss might want you to make a pie chart.
 
 c3plot also provides a `c3pie()` function that works like the base R `pie` function, albeit with a simplified set of arguments. `x` is a vector of non-negative numerical quantities. Names for the pie slices can be given as a character vector to the `labels` argument. If `x` is a named vector, the names will be used to label the pie slices (`labels` defaults to `names(x)`).
 

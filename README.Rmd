@@ -18,9 +18,9 @@ knitr::opts_chunk$set(
 
 
 
-The goal of c3plot is provide to a base 'graphics'-like interface to the [C3.js](https://c3js.org/) JavaScript charting library. The main `c3plot()` function is an s3 generic like the base `plot()` function with methods for various base R objects.
+The goal of c3plot is provide to a base 'graphics'-like interface to the [C3.js](https://c3js.org/) JavaScript charting library. The main `c3plot()` function is an S3 generic like the base `plot()` function with methods for various base R objects.
 
-Besides `htmlwidgets`, it has minimal R dependencies.
+Besides `htmlwidgets`, it has minimal R dependencies. Tidyverse not required!
 
 ## Installation
 
@@ -34,7 +34,7 @@ devtools::install_github("arkraieski/c3plot")
 
 Here’s some example code for a basic scatter plot using R’s `airquality` dataset:
 
-```{r example}
+```{r eval=FALSE}
 library(c3plot)
 air <- airquality
 c3plot(air$Ozone, air$Solar.R, 
@@ -50,7 +50,8 @@ c3plot(air$Ozone, air$Solar.R,
 
 To see a list of S3 methods:
 
-```{r cars}
+```{r}
+library(c3plot)
 methods(c3plot)
 ```
 
@@ -59,4 +60,4 @@ More are on the way! The goal is to replicate the behavior of base R `plot()` me
 
 ## Testing
 
-Basic tests are implemented, but this is a WIP.
+Basic tests are implemented, but this is a WIP. The package is tested on Windows, Linux, and MacOS.
