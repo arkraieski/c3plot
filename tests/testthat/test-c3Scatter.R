@@ -41,3 +41,15 @@ test_that("coloring by group works in c3plot()",{
 test_that("c3plot() throws an invalid color error",{
   expect_error(c3plot(x = mtcars$mpg, y = mtcars$qsec, col = "fakecolor"), "Invalid colors")
 })
+
+
+context("c3plot.lm")
+
+test_that("c3plot.lm() creates an html widget",{
+  lm.SR <- lm(sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings)
+  l <- c3plot(lm.SR)
+
+  expect_is(l, "c3Scatter")
+  expect_is(l, "htmlwidget")
+  }
+)

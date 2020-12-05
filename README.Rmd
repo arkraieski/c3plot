@@ -32,7 +32,7 @@ devtools::install_github("arkraieski/c3plot")
 ```
 ## Example
 
-Here's an example of a basic scatter plot using R's `airquality` dataset
+Here’s some example code for a basic scatter plot using R’s `airquality` dataset:
 
 ```{r example}
 library(c3plot)

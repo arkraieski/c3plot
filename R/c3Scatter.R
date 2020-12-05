@@ -73,7 +73,7 @@ c3plot.default <- function(x, y, type  = "p", main = NULL, xlab = NULL,
 
   # function to split data by col.group
   split_data_groups <- function(x, y, col.group) {
-    data_by_group <- split(data.frame(x, y), col.group)
+    data_by_group <- split(data.frame(x, y)[!(is.na(x) & is.na(y)),], col.group)
     group_names <<- names(data_by_group) # sorry
 
     grouped_data <- list(x = list(), y = list())
@@ -218,6 +218,43 @@ c3plot.function <-function(x, from = 0, to = 1, ylab = NULL, ...){
   ll <- list(x = xseq); names(ll) <- xname
   ll$y <- eval(x, envir = ll, enclos = parent.frame())
   c3plot.default(x = ll$x, y = ll$y, xlab = xlab, ylab = ylab, type = "l", ...)
+
+}
+
+#' C3 Plot Diagnostics for an lm Object
+#'
+#'a plot of residuals against fitted values
+#'
+#' @param x an "lm" object
+#' @param which 1 is the only supported value currently. This argument is included for consistency with the base \code{plot.lm()} method.
+#' @param ... arguments passed to other methods.
+#' @method c3plot lm
+#' @export
+#' @import stats
+c3plot.lm <- function(x, which = 1, ...){
+
+  if (!inherits(x, "lm")) {
+    stop("use only with \"lm\" objects")
+    }
+
+
+  r <- if(inherits(x, "glm")) residuals(x, type="pearson") else residuals(x)
+  yh <- predict(x) # != fitted() for glm
+  w <- weights(x)
+  # if(!is.null(w)) { # drop obs with zero wt: PR#6640
+  #   wind <- w != 0
+  #   r <- r[wind]
+  #   yh <- yh[wind]
+  #   w <- w[wind]
+  #   labels.id <- labels.id[wind]
+  # }
+
+  l.fit <- if (inherits(x, "glm")) "Predicted values" else "Fitted values"
+
+  c3plot.default(x = unname(yh), y = unname(r), xlab = l.fit, ylab = "Residuals",
+                 main = "Residuals vs. Fitted",
+                 type = "p", ...)
+
 
 }
 
