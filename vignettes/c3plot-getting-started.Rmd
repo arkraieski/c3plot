@@ -44,7 +44,7 @@ plot(x = mtcars$hp, y = mtcars$qsec)
 ```
 
 
-Now with `c3plot`:
+Now with `c3plot()`:
 
 ```{r}
 c3plot(x = mtcars$hp, y = mtcars$qsec)
