@@ -43,6 +43,16 @@ test_that("c3plot() throws an invalid color error",{
 })
 
 
+test_that("c3plot() works with a list of color names", {
+  mtcars$cyl <- as.factor(mtcars$cyl)
+  cg <- c3plot(mtcars$disp, mtcars$mpg, col.group = mtcars$cyl, col = c("blue", "red", "black"))
+
+  expect_is(cg, "c3Scatter")
+  expect_is(cg, "htmlwidget")
+})
+
+
+
 context("c3plot.lm")
 
 test_that("c3plot.lm() creates an html widget",{
