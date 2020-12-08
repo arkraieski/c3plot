@@ -91,7 +91,7 @@ c3plot.default <- function(x, y, type  = "p", main = NULL, xlab = NULL,
 
   if(!is.null(col)){
     if(!is.character(col)){
-      stop("col must be a character vector", call. = FALSE)
+      stop("col must be a character vector")
     }
     if(length(col) == 1) {
 
@@ -110,7 +110,9 @@ c3plot.default <- function(x, y, type  = "p", main = NULL, xlab = NULL,
           if(is.null(col.group)){
             stop("Argument col.groups must be specified to use multiple colors", call. = FALSE)
           }
-          col_parsed <-  ifelse(col %in% colors(),
+
+          r_colors <- colors()
+          col_parsed <-  ifelse(col %in% r_colors,
                                 col2hex(col),
                                 col)
           if(any(!grepl("^#(?:[0-9a-fA-F]{3}){1,2}$", col_parsed))){
