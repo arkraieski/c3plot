@@ -17,5 +17,11 @@ Imports: htmlwidgets, gplots, grDevices
 Suggests: 
     testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
+    gapminder,
+    plotly,
+    ggplot2,
+    c3,
+    microbenchmark,
+    dplyr
 VignetteBuilder: knitr

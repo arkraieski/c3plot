@@ -1,0 +1,236 @@
+---
+title: "Benchmark"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Benchmark}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+knitr::opts_chunk$set(fig.width=5) 
+```
+## Introduction
+
+The vignette benchmarks `c3plot` against various other plotting systems for R, namely `plotly`. Two basic plots will be used for this benchmark, a basic scatter plot and a grouped line plot. I am uncertain if JavaScript execution time is counted by `microbenchmark`. Even if we assume it isn't, the benchmark results are informative because it's always better if the R process gets tied up for less time per plot. First, let's load the visualization packages to compare:
+
+```{r}
+library(c3plot)
+library(plotly)
+library(ggplot2)
+library(c3)
+```
+## Scatter Plot
+
+First, we will benchmark the creation of simple scatter plots using data from the `gapminder` package. To begin, we will define functions to create similar scatterplots using each of the packages to be compared. The plots themselves are not important but are shown to demonstrate that they work and produce roughly similar plots.
+
+```{r}
+library(gapminder)
+
+gapminder <- gapminder
+
+plot_base <- function(x){
+  
+  plot(x = x$gdpPercap, y = x$lifeExp)
+}
+
+plot_base(gapminder)
+
+```
+
+```{r}
+plot_c3plot <- function(x){
+ 
+  c3plot(x = x$gdpPercap, y = x$lifeExp, sci.x = TRUE)
+}
+plot_c3plot(gapminder)
+```
+
+```{r}
+plot_plotly <- function(x){
+  plot_ly(data = x, x = ~gdpPercap, y = ~lifeExp, type = "scatter")
+}
+plot_plotly(gapminder)
+```
+
+
+```{r}
+plot_ggplotly <- function(x){
+  g <- ggplot(x, aes(x = gdpPercap, y = lifeExp)) + geom_point() + theme_minimal()
+  ggplotly(g)
+}
+plot_ggplotly(gapminder)
+```
+
+
+```{r}
+plot_ggplot <- function(x){
+  ggplot(x, aes(x = gdpPercap, y = lifeExp)) + geom_point() + theme_minimal()
+}
+plot_ggplot(gapminder)
+```
+
+
+```{r}
+plot_c3 <- function(x){
+ c3(x, x = "gdpPercap", y = "lifeExp") %>%
+    c3_scatter()
+}
+plot_c3(gapminder)
+```
+
+Now, these functions are benchmarked:
+
+```{r echo = T, fig.show='hide'}
+library(microbenchmark)
+m <- microbenchmark(base = plot_base(gapminder),
+               c3plot = plot_c3plot(gapminder),
+               plotly = plot_plotly(gapminder),
+               ggplotly = plot_ggplotly(gapminder),
+               ggplot = plot_ggplot(gapminder),
+              c3 = plot_c3(gapminder),
+               unit = "ms",
+               times = 50)
+```
+
+```{r}
+m
+```
+
+On my main development machine, c3plot was the quickest by an order of magnitude. This can vary, but `plotly` is roughly 20 times slower, and `ggplotly()` is hundreds of times slower. However, `plotly` was still quick enough that the performance difference with `c3plot` would be imperceptible to users.
+
+```{r}
+plot(m)
+```
+
+
+Let's look at kernel density plots of the time distributions for `c3plot` and `plotly`.
+
+```{r}
+density_c3plot <- density(m$time[m$expr == "c3plot"])
+c3plot(density_c3plot)
+```
+
+
+```{r}
+density_plotly <- density(m$time[m$expr == "plotly"])
+c3plot(density_plotly)
+```
+
+Let's use a two-sample Wilcoxon test to compare the means of execution time for c3plot and plotly. A t-test would not be suitable because we cannot assume normality. The null hypothesis is that `c3plot` and `plotly` will have the same mean execution time for these scatter plots.
+
+```{r}
+w <- wilcox.test(m$time[m$expr == "c3plot"],
+                 m$time[m$expr == "plotly"],
+                 alternative = "less",
+                 paired = FALSE)
+w
+```
+
+Can we reject the null hypothesis?
+```{r}
+ifelse(w$p.value < .05, "yes", "no")
+```
+
+
+
+## Grouped Line plots
+
+Making line plots colored by group is a common plotting task that could potentially expose some slowness in `c3plot`. We will make line plots of the total GDP by continent by year. First, we must summarize the data and define functions for making this lineplot with various packages.
+
+```{r}
+library(dplyr)
+gdp_cont <- gapminder %>%
+  mutate(gdp = pop * gdpPercap) %>%
+  group_by(continent, year) %>%
+  summarize(total_gdp = sum(gdp))
+
+plot_title <- "Total GDP by Continent 1952 - 2007"
+```
+
+```{r}
+c3plot_line <- function(x){
+  c3plot(x$year, x$total_gdp, col.group = x$continent, sci.y = TRUE, 
+         type = "l", main = plot_title, xlab = "Year", ylab = "GDP",
+         legend.title = "Continent")
+}
+
+c3plot_line(gdp_cont)
+```
+
+
+```{r}
+ggplot_line <- function(x){
+  ggplot(x, aes(x = year, y = total_gdp, col = continent, group = continent)) +
+    geom_line() +
+    theme_minimal() +
+    labs(title = plot_title, x = "Year", y = "GDP")
+}
+ggplot_line(gdp_cont)
+```
+
+
+```{r}
+ggplotly_line <- function(x){
+  p <- ggplot(x, aes(x = year, y = total_gdp, col = continent)) +
+    geom_line() +
+    theme_minimal() +
+    labs(title = plot_title, x = "Year", y = "GDP")
+  ggplotly(p)
+}
+
+ggplotly_line(gdp_cont)
+```
+
+
+```{r}
+plotly_line <- function(x){
+  plot_ly(data = x, x = ~year, y = ~total_gdp, split = ~continent,
+          type = "scatter", color  = ~continent, mode = "lines")
+}
+plotly_line(gdp_cont)
+```
+
+```{r, echo=T, fig.show="hide"}
+m2 <- microbenchmark(c3plot = c3plot_line(gdp_cont),
+                     ggplotly = ggplotly_line(gdp_cont),
+                     plotly = plotly_line(gdp_cont),
+                     ggplot = ggplot_line(gdp_cont),
+                     unit = "ms",
+                     times = 50)
+```
+
+```{r}
+m2
+```
+
+```{r}
+plot(m2)
+```
+
+
+Let's perform the same test as before:
+
+```{r}
+w2 <- wilcox.test(m2$time[m2$expr == "c3plot"],
+                 m2$time[m2$expr == "plotly"],
+                 alternative = "less",
+                 paired = FALSE)
+w2
+```
+
+Can we reject the null hypothesis that c3 and plotly have the same mean?
+```{r}
+ifelse(w2$p.value < .05, "yes", "no")
+```
+
+## Conclusions
+
+Although benchmark results will vary on different systems, the results on my development machine indicate that c3plot is faster than plotly (and others) for both the tested scatterplot and grouped line plot. Although statistically significant, the difference in performance between c3plot and plotly would almost certainly never be perceptible to users.
+
+Both c3plot and direct use of plotly potentially offer perceptible performance improvements over using `ggplotly()` to generate interactive visualizations. Shiny developers may find this information useful.
