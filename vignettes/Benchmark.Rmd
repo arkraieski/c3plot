@@ -21,9 +21,9 @@ The vignette benchmarks `c3plot` against various other plotting systems for R, n
 
 ```{r}
 library(c3plot)
+library(c3)
 library(plotly)
 library(ggplot2)
-library(c3)
 ```
 ## Scatter Plot
 
@@ -196,6 +196,8 @@ plotly_line <- function(x){
 plotly_line(gdp_cont)
 ```
 
+Now let's benchmark these line plot functions:
+
 ```{r, echo=T, fig.show="hide"}
 m2 <- microbenchmark(c3plot = c3plot_line(gdp_cont),
                      ggplotly = ggplotly_line(gdp_cont),
@@ -231,6 +233,6 @@ ifelse(w2$p.value < .05, "yes", "no")
 
 ## Conclusions
 
-Although benchmark results will vary on different systems, the results on my development machine indicate that c3plot is faster than plotly (and others) for both the tested scatterplot and grouped line plot. Although statistically significant, the difference in performance between c3plot and plotly would almost certainly never be perceptible to users.
+Although benchmark results will vary on different systems, the results on my development machine indicate that c3plot is faster than plotly (and others) for both the scatter plot and grouped line plot tested. Although statistically significant, the difference in performance between c3plot and plotly would almost certainly never be perceptible to users.
 
 Both c3plot and direct use of plotly potentially offer perceptible performance improvements over using `ggplotly()` to generate interactive visualizations. Shiny developers may find this information useful.
