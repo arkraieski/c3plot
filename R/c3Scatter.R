@@ -31,6 +31,8 @@ c3plot <- function(x, ...) {
 #' @param x the x coordinates for the plot.
 #' @param y the y coordinates for the plot.
 #' @param type 1-character string giving the type of plot desired. The following values are possible: "p" for points, "l" for lines, and "b" for both points and lines.
+#' @param xlim the x limits (x1, x2) of the plot.
+#' @param ylim the y limits of the plot.
 #' @param main a main title for the plot.
 #' @param xlab a label for the x axis, defaults to a description of x.
 #' @param ylab a label for the y axis, defaults to a description of y.
@@ -51,7 +53,7 @@ c3plot <- function(x, ...) {
 #' @export
 #' @importFrom grDevices colors
 #' @importFrom gplots col2hex
-c3plot.default <- function(x, y, type  = "p", main = NULL, xlab = NULL,
+c3plot.default <- function(x, y, type  = "p", xlim = NULL, ylim = NULL, main = NULL, xlab = NULL,
                            ylab = NULL, zoom = TRUE, col.group = NULL,
                            col = NULL, legend.title = NULL, sci.x = FALSE,
                            sci.y = FALSE, ...){
@@ -70,6 +72,10 @@ c3plot.default <- function(x, y, type  = "p", main = NULL, xlab = NULL,
   } else {
     stop('type must be "p", "l", or "b"', call. = FALSE)
   }
+
+  if(!is.null(xlim) && (xlim[1] > xlim[2] || length(xlim) != 2) ) stop("xlim must be either NULL or a length 2 numeric vector where the second element is greater than the first")
+
+  if(!is.null(ylim) && (ylim[1] > ylim[2] || length(ylim) != 2)) stop("ylim must be either NULL or a length 2 numeric vector where the second element is greater than the first")
 
   # function to split data by col.group
   split_data_groups <- function(x, y, col.group) {
@@ -143,6 +149,8 @@ c3plot.default <- function(x, y, type  = "p", main = NULL, xlab = NULL,
   data <- list(x = x,
                y = y,
                plot_type = plot_type,
+               xlim = xlim,
+               ylim = ylim,
                title = main,
                xlab = xlab,
                ylab = ylab,

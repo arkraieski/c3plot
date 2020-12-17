@@ -8,6 +8,8 @@
   x,
   y,
   type = "p",
+  xlim = NULL,
+  ylim = NULL,
   main = NULL,
   xlab = NULL,
   ylab = NULL,
@@ -26,6 +28,10 @@
 \item{y}{the y coordinates for the plot.}
 
 \item{type}{1-character string giving the type of plot desired. The following values are possible: "p" for points, "l" for lines, and "b" for both points and lines.}
+
+\item{xlim}{the x limits (x1, x2) of the plot.}
+
+\item{ylim}{the y limits of the plot.}
 
 \item{main}{a main title for the plot.}
 
