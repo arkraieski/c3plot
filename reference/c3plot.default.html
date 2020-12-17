@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -132,6 +132,8 @@
   <span class='va'>x</span>,
   <span class='va'>y</span>,
   type <span class='op'>=</span> <span class='st'>"p"</span>,
+  xlim <span class='op'>=</span> <span class='cn'>NULL</span>,
+  ylim <span class='op'>=</span> <span class='cn'>NULL</span>,
   main <span class='op'>=</span> <span class='cn'>NULL</span>,
   xlab <span class='op'>=</span> <span class='cn'>NULL</span>,
   ylab <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -158,6 +160,14 @@
     <tr>
       <th>type</th>
       <td><p>1-character string giving the type of plot desired. The following values are possible: "p" for points, "l" for lines, and "b" for both points and lines.</p></td>
+    </tr>
+    <tr>
+      <th>xlim</th>
+      <td><p>the x limits (x1, x2) of the plot.</p></td>
+    </tr>
+    <tr>
+      <th>ylim</th>
+      <td><p>the y limits of the plot.</p></td>
     </tr>
     <tr>
       <th>main</th>

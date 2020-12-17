@@ -15,6 +15,25 @@ HTMLWidgets.widget({
                 var chart = {};
                 var color = {};
 
+                var xpadding = {};
+                var xMax = undefined;
+                var xMin = undefined;
+                if(x.data.xlim !== null){
+                    xpadding = {left: 0, right: 0 };
+                    xMax = x.data.xlim[1];
+                    xMin = x.data.xlim[0];
+                }
+
+                var ypadding = {};
+                var yMax = null;
+                var yMin = null;
+                if(x.data.ylim !== null){
+                    ypadding = {top: 0, bottom: 0};
+                    yMax = x.data.ylim[1];
+                    yMin = x.data.ylim[0];
+
+                }
+
 
                 var xTickFormat = {};
                 if(x.data.sci_x){
@@ -44,12 +63,7 @@ HTMLWidgets.widget({
                     yCol.unshift(x.data.ylab);
 
                     var plotType = x.data.plot_type;
-                    console.log(x);
-                    console.log(xCol);
 
-                    // when tab hidden el.get... returns 0
-                    //var w = el.getBoundingClientRect().width;
-                    //var h = el.getBoundingClientRect().height;
 
                     color[x.data.ylab] = x.data.col_hex;
 
@@ -69,6 +83,9 @@ HTMLWidgets.widget({
                         },
                         axis: {
                             x: {
+                                max: xMax,
+                                min: xMin,
+                                padding: xpadding,
                                 label: {
                                     text: x.data.xlab,
                                     position: "outer-center"
@@ -77,6 +94,10 @@ HTMLWidgets.widget({
                                 tick: xTickFormat
                             },
                             y: {
+
+                                max: yMax,
+                                min: yMin,
+                                padding: ypadding,
                                 label: {
                                     text: x.data.ylab,
                                     position: "outer-middle"
@@ -157,6 +178,10 @@ HTMLWidgets.widget({
                         },
                         axis: {
                             x: {
+                                max: xMax,
+                                min: xMin,
+                                padding: xpadding,
+
                                 label: {
                                     text: x.data.xlab,
                                     position: "outer-center"
@@ -165,6 +190,9 @@ HTMLWidgets.widget({
                                 tick: xTickFormat
                             },
                             y: {
+                                max: yMax,
+                                min: yMin,
+                                padding: ypadding,
                                 label: {
                                     text: x.data.ylab,
                                     position: "outer-middle"
@@ -204,14 +232,7 @@ HTMLWidgets.widget({
 
             resize: function(width, height) {
 
-                //var w = el.getBoundingClientRect().width;
-                //var h = el.getBoundingClientRect().height;
 
-                // code to re-render the widget with a new size
-                //chart.resize({
-                //height: h,
-                // width: w
-                //});
 
             }
 
