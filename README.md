@@ -36,8 +36,6 @@ c3plot(air$Ozone, air$Solar.R,
        col = "red")
 ```
 
-<img src="man/figures/README-examplePlot-1.png" width="100%" />
-
 ## Methods
 
 To see a list of S3 methods:
