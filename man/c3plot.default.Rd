@@ -39,7 +39,7 @@
 
 \item{ylab}{a label for the y axis, defaults to a description of y.}
 
-\item{zoom}{logical; should the zooming feature (controlled my mouse wheel event) be enabled for the plot?}
+\item{zoom}{logical; should the zooming feature (controlled by mouse wheel event) be enabled for the plot?}
 
 \item{col.group}{optionally, a factor the same length as \code{x} by which to group and color points.}
 
