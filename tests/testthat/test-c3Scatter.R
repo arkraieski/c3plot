@@ -63,3 +63,13 @@ test_that("c3plot.lm() creates an html widget",{
   expect_is(l, "htmlwidget")
   }
 )
+
+
+context("c3plot.function")
+
+test_that("c3plot.function() works",{
+  q <- c3plot(qnorm)
+
+  expect_is(q, "c3Scatter")
+  expect_is(q, "htmlwidget")
+})
