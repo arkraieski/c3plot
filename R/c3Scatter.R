@@ -36,7 +36,7 @@ c3plot <- function(x, ...) {
 #' @param main a main title for the plot.
 #' @param xlab a label for the x axis, defaults to a description of x.
 #' @param ylab a label for the y axis, defaults to a description of y.
-#' @param zoom logical; should the zooming feature (controlled my mouse wheel event) be enabled for the plot?
+#' @param zoom logical; should the zooming feature (controlled by mouse wheel event) be enabled for the plot?
 #' @param col.group optionally, a factor the same length as \code{x} by which to group and color points.
 #' @param col The colors for the lines and points. If \code{col.group} is specified, this can be a vector of colors to use for each group in the data. If \code{NULL}, the C3 default colors are used.
 #' @param legend.title a title for the legend.
