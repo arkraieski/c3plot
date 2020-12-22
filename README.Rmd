@@ -34,7 +34,7 @@ devtools::install_github("arkraieski/c3plot")
 
 Here’s some example code for a basic scatter plot using R’s `airquality` dataset:
 
-```{r eval=FALSE}
+```{r examplePlot}
 library(c3plot)
 air <- airquality
 c3plot(air$Ozone, air$Solar.R, 
@@ -55,7 +55,7 @@ library(c3plot)
 methods(c3plot)
 ```
 
-More are on the way! The goal is to replicate the behavior of base R `plot()` methods as closely as possible while also getting the benefits of using C3.
+More are on the way! The goal is to replicate the behavior of base R `plot()` methods as closely as possible while also getting the benefits of using C3 (ie. interactivity). Each method has its own help page that can be accessed for additional information.
 
 
 ## Testing
