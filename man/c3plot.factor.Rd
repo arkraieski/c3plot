@@ -4,10 +4,12 @@
 \alias{c3plot.factor}
 \title{Factor Variable Bar Plots}
 \usage{
-\method{c3plot}{factor}(x, ...)
+\method{c3plot}{factor}(x, ylab = "Count", ...)
 }
 \arguments{
 \item{x}{a factor.}
+
+\item{ylab}{a label for the y axis.}
 
 \item{...}{arguments passed to \code{\link{c3barplot}}.}
 }

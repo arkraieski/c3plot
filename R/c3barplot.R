@@ -3,7 +3,10 @@
 #' Creates a bar plot using 'C3.JS'.
 #'
 #' @param heights a vector of values describing the bars that make up the plot.
+#' @param names.arg a vector of names to be plotted below each bar.
+#' @param col a character string with the color for bars. This can be either a hex value or the name of an R built-in color.
 #' @param main a main title for the plot.
+#' @param ylab a label for the y axis.
 #' @param width width of the widget to create for the plot. The default is NULL, which results in automatic resizing based on the plot's container.
 #' @param height height of the widget to create for the plot. The default is NULL, which results in automatic resizing based on the plot's container.
 #' @param elementId Use an explicit element ID for the widget, rather than an automatically generated one.
@@ -11,7 +14,8 @@
 #' @import htmlwidgets
 #'
 #' @export
-c3barplot <- function(heights, names.arg = NULL, main = NULL, ylab = NULL, width = NULL, height = NULL, elementId = NULL, ...) {
+c3barplot <- function(heights, names.arg = NULL, col = NULL, main = NULL, ylab = NULL,
+                      width = NULL, height = NULL, elementId = NULL, ...) {
 
   if(!is.vector(heights || !is.numeric(heights))) {
     stop("heights must be a numeric vector")
@@ -25,10 +29,22 @@ c3barplot <- function(heights, names.arg = NULL, main = NULL, ylab = NULL, width
     stop("names.arg must be NULL or a character vector")
   }
 
+  if(!is.null(col)){
+    if(!grepl("^#(?:[0-9a-fA-F]{3}){1,2}$", col)){
+      r_colors <- colors()
+      if(col %in% r_colors) colhex <- col2hex(col) else stop("Invalid color in col")
+    } else{
+      colhex <- col
+    }
+  } else {
+    colhex <- NULL
+  }
+
   # forward options using x
   x = list(
     height = heights,
     categories = names.arg,
+    col = colhex,
     main = main,
     ylab = ylab
   )
@@ -51,6 +67,7 @@ c3barplot <- function(heights, names.arg = NULL, main = NULL, ylab = NULL, width
 #' This function implements a bar plot method for \code{factor} arguments to the \code{\link{c3plot}} generic function. Bar heights will be counts for the factor levels.
 #'
 #' @param x a factor.
+#' @param ylab a label for the y axis.
 #' @param ... arguments passed to \code{\link{c3barplot}}.
 #' @method c3plot factor
 #' @export
@@ -59,11 +76,11 @@ c3barplot <- function(heights, names.arg = NULL, main = NULL, ylab = NULL, width
 #' mtcars <- mtcars
 #' mtcars$cyl <- as.factor(mtcars$cyl)
 #' c3plot(mtcars$cyl)
-c3plot.factor <- function(x, ...){
+c3plot.factor <- function(x, ylab = "Count", ...){
 
   h <- as.vector(table(x))
 
-  c3barplot(heights = h, names.arg = levels(x), ...)
+  c3barplot(heights = h, names.arg = levels(x), ylab = ylab, ...)
 
 }
 
