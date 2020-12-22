@@ -130,6 +130,7 @@
     <pre class="usage"><span class='fu'>c3barplot</span><span class='op'>(</span>
   <span class='va'>heights</span>,
   names.arg <span class='op'>=</span> <span class='cn'>NULL</span>,
+  col <span class='op'>=</span> <span class='cn'>NULL</span>,
   main <span class='op'>=</span> <span class='cn'>NULL</span>,
   ylab <span class='op'>=</span> <span class='cn'>NULL</span>,
   width <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -146,8 +147,20 @@
       <td><p>a vector of values describing the bars that make up the plot.</p></td>
     </tr>
     <tr>
+      <th>names.arg</th>
+      <td><p>a vector of names to be plotted below each bar.</p></td>
+    </tr>
+    <tr>
+      <th>col</th>
+      <td><p>a character string with the color for bars. This can be either a hex value or the name of an R built-in color.</p></td>
+    </tr>
+    <tr>
       <th>main</th>
       <td><p>a main title for the plot.</p></td>
+    </tr>
+    <tr>
+      <th>ylab</th>
+      <td><p>a label for the y axis.</p></td>
     </tr>
     <tr>
       <th>width</th>

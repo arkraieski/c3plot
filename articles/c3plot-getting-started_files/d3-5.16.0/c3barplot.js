@@ -13,12 +13,18 @@ HTMLWidgets.widget({
       renderValue: function(x) {
 
       var height = x.height;
+      var dataLabel = {};
       if(x.ylab === null){
       height.unshift("height");
+      dataLabel = "height";
       } else{
         var ylab = x.ylab;
         height.unshift(x.ylab);
-      }
+        dataLabel = ylab;
+        }
+
+      var mycols = {};
+      mycols[dataLabel] = x.col;
 
       if(!(x.categories === null)){
         var xaxis = {
@@ -27,13 +33,16 @@ HTMLWidgets.widget({
         };
       }
 
+
+
       console.log(height);
        var chart = c3.generate({
          bindto: el,
          data: {
            columns:[ height
            ],
-           type: "bar"
+           type: "bar",
+           colors: mycols
          },
          axis: {
            x: xaxis,
