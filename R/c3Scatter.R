@@ -315,7 +315,7 @@ c3plotOutput <- function(outputId, width = '100%', height = '400px'){
 
 #' @rdname c3plot-shiny
 #' @export
-renderC3plot <- function(expr, env = parent.frame(), quoted = FALSE) {
+renderc3plot <- function(expr, env = parent.frame(), quoted = FALSE) {
   if (!quoted) { expr <- substitute(expr) } # force quoted
   htmlwidgets::shinyRenderWidget(expr, c3plotOutput, env, quoted = TRUE)
 }

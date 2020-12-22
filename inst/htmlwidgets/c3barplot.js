@@ -13,7 +13,19 @@ HTMLWidgets.widget({
       renderValue: function(x) {
 
       var height = x.height;
+      if(x.ylab === null){
       height.unshift("height");
+      } else{
+        var ylab = x.ylab;
+        height.unshift(x.ylab);
+      }
+
+      if(!(x.categories === null)){
+        var xaxis = {
+          type: "category",
+          categories: x.categories
+        };
+      }
 
       console.log(height);
        var chart = c3.generate({
@@ -23,6 +35,21 @@ HTMLWidgets.widget({
            ],
            type: "bar"
          },
+         axis: {
+           x: xaxis,
+           y: {
+             label: {
+                text: ylab,
+                position:  "outer-middle"
+             }
+           }
+         },
+         title: {
+           text: x.main
+         },
+         legend: {
+           show: false
+         }
 
        });
 

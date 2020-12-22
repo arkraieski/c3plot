@@ -4,17 +4,30 @@
 \alias{c3barplot}
 \title{C3 Bar Plots}
 \usage{
-c3barplot(heights, width = NULL, height = NULL, elementId = NULL)
+c3barplot(
+  heights,
+  names.arg = NULL,
+  main = NULL,
+  ylab = NULL,
+  width = NULL,
+  height = NULL,
+  elementId = NULL,
+  ...
+)
 }
 \arguments{
-\item{heights}{a vector of values describing the bars that make up the plot}
+\item{heights}{a vector of values describing the bars that make up the plot.}
+
+\item{main}{a main title for the plot.}
 
 \item{width}{width of the widget to create for the plot. The default is NULL, which results in automatic resizing based on the plot's container.}
 
 \item{height}{height of the widget to create for the plot. The default is NULL, which results in automatic resizing based on the plot's container.}
 
 \item{elementId}{Use an explicit element ID for the widget, rather than an automatically generated one.}
+
+\item{...}{arguments passed from methods.}
 }
 \description{
-Creates a bar plot using 'C3.JS'
+Creates a bar plot using 'C3.JS'.
 }

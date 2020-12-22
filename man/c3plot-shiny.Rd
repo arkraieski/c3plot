@@ -3,12 +3,12 @@
 \name{c3plot-shiny}
 \alias{c3plot-shiny}
 \alias{c3plotOutput}
-\alias{renderC3plot}
+\alias{renderc3plot}
 \title{Shiny bindings for c3plot}
 \usage{
 c3plotOutput(outputId, width = "100\%", height = "400px")
 
-renderC3plot(expr, env = parent.frame(), quoted = FALSE)
+renderc3plot(expr, env = parent.frame(), quoted = FALSE)
 }
 \arguments{
 \item{outputId}{output variable to read from}
