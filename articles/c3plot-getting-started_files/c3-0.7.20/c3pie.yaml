@@ -7,4 +7,6 @@ dependencies:
    version: 0.7.20
    src: htmlwidgets
    script: ./lib/c3.min.js
-   stylesheet: ./lib/c3.min.css
+   stylesheet:
+   - ./lib/c3.min.css
+   - ./lib/c3pie.css

@@ -31,7 +31,10 @@ HTMLWidgets.widget({
             json: pieJSON,
             type : 'pie',
             colors: plotColors
-        }
+        },
+          title: {
+           text: x.main
+         }
       });
 
       },
