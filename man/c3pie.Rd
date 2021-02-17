@@ -8,6 +8,7 @@ c3pie(
   x,
   labels = names(x),
   col = NULL,
+  main = NULL,
   width = NULL,
   height = NULL,
   elementId = NULL
@@ -19,6 +20,8 @@ c3pie(
 \item{labels}{character vector giving names for the slices.}
 
 \item{col}{character vector of colors to be used in filling the slices. Can be a hex value or an R built-in color name.}
+
+\item{main}{a main title for the plot.}
 
 \item{width}{width of the widget to create for the plot. The default is NULL, which results in automatic resizing based on the plot's container.}
 

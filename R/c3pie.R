@@ -5,6 +5,7 @@
 #' @param x a vector of non-negative numerical quantities. The values in x are displayed as the areas of pie slices.
 #' @param labels character vector giving names for the slices.
 #' @param col character vector of colors to be used in filling the slices. Can be a hex value or an R built-in color name.
+#' @param main a main title for the plot.
 #' @param width width of the widget to create for the plot. The default is NULL, which results in automatic resizing based on the plot's container.
 #' @param height height of the widget to create for the plot. The default is NULL, which results in automatic resizing based on the plot's container.
 #' @param elementId Use an explicit element ID for the widget, rather than an automatically generated one.
@@ -21,7 +22,8 @@
 #'                       "cornsilk", "cyan", "white"))
 #'
 #' @export
-c3pie <- function(x, labels = names(x), col = NULL, width = NULL, height = NULL, elementId = NULL) {
+c3pie <- function(x, labels = names(x), col = NULL, main = NULL,
+                  width = NULL, height = NULL, elementId = NULL) {
   if(length(x) !=  length(labels)){
     stop("x and labels must be the same length")
   }
@@ -45,7 +47,8 @@ c3pie <- function(x, labels = names(x), col = NULL, width = NULL, height = NULL,
   x <-  list(
     labels = labels,
     values = unname(x),
-    colors = col_hexes
+    colors = col_hexes,
+    main = main
   )
 
   # create widget
