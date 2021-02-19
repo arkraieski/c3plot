@@ -8,6 +8,7 @@ c3pie(
   x,
   labels = names(x),
   col = NULL,
+  slice.text = "pct",
   main = NULL,
   width = NULL,
   height = NULL,
@@ -20,6 +21,8 @@ c3pie(
 \item{labels}{character vector giving names for the slices.}
 
 \item{col}{character vector of colors to be used in filling the slices. Can be a hex value or an R built-in color name.}
+
+\item{slice.text}{\code{"pct"} to display percentage-formatted values inside pie slices (default c3.js behavior) or \code{"id"} to display the slice's name from \code{labels} (note that this does not change labels' positioning within their slices, so using \code{slize.text = "id"} may result in poorly-placed or cut-off slice labels)}
 
 \item{main}{a main title for the plot.}
 
