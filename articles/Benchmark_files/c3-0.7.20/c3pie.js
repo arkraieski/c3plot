@@ -32,6 +32,12 @@ HTMLWidgets.widget({
             type : 'pie',
             colors: plotColors
         },
+          pie: {
+            label: {
+              format: x.label_function
+
+            }
+          },
           title: {
            text: x.main
          }
