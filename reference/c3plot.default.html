@@ -141,6 +141,7 @@
   col.group <span class='op'>=</span> <span class='cn'>NULL</span>,
   col <span class='op'>=</span> <span class='cn'>NULL</span>,
   legend.title <span class='op'>=</span> <span class='cn'>NULL</span>,
+  legend.position <span class='op'>=</span> <span class='st'>"right"</span>,
   sci.x <span class='op'>=</span> <span class='cn'>FALSE</span>,
   sci.y <span class='op'>=</span> <span class='cn'>FALSE</span>,
   <span class='va'>...</span>
@@ -195,7 +196,11 @@
     </tr>
     <tr>
       <th>legend.title</th>
-      <td><p>a title for the legend.</p></td>
+      <td><p>a title for the legend. Defaults to a description of a description of <code>col.group</code> if not set. You can also use <code>legend.title = FALSE</code> to suppress to not show a title for the legend.</p></td>
+    </tr>
+    <tr>
+      <th>legend.position</th>
+      <td><p>Position of the plot legend. Possible values are "right", "inset", and "hide". This is ignored if all points are colored the same (i.e. no value was set for <code>col.group</code>); no legend will be shown in those instances.</p></td>
     </tr>
     <tr>
       <th>sci.x</th>

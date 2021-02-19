@@ -38,6 +38,10 @@ HTMLWidgets.widget({
 
             }
           },
+          legend: {
+            position: x.legend.position,
+            hide: x.legend.hide
+          },
           title: {
            text: x.main
          }

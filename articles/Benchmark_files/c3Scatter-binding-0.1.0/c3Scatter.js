@@ -202,8 +202,8 @@ HTMLWidgets.widget({
                             }
                         },
                         legend: {
-                            show: true,
-                            position: "right"
+                            hide: x.data.legend.hide,
+                            position: x.data.legend.position
                         },
                         zoom: {
                             enabled: x.data.zoom
@@ -223,7 +223,7 @@ HTMLWidgets.widget({
                     var legendY = parseInt(firstLegend.select('text').attr('y'));
                     legendCon
                         .append('text')
-                        .text(x.data.leg)
+                        .text(x.data.legend.text)
                         .attr('y', legendY - 20)
                         .attr("font-size", "12px");
                 }
