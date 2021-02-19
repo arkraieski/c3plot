@@ -17,6 +17,7 @@
   col.group = NULL,
   col = NULL,
   legend.title = NULL,
+  legend.position = "right",
   sci.x = FALSE,
   sci.y = FALSE,
   ...
@@ -45,7 +46,9 @@
 
 \item{col}{The colors for the lines and points. If \code{col.group} is specified, this can be a vector of colors to use for each group in the data. If \code{NULL}, the C3 default colors are used.}
 
-\item{legend.title}{a title for the legend.}
+\item{legend.title}{a title for the legend. Defaults to a description of a description of \code{col.group} if not set. You can also use \code{legend.title = FALSE} to suppress to not show a title for the legend.}
+
+\item{legend.position}{Position of the plot legend. Possible values are "right", "inset", and "hide". This is ignored if all points are colored the same (i.e. no value was set for \code{col.group}); no legend will be shown in those instances.}
 
 \item{sci.x}{logical indicating whether scientific notation should be used for the x-axis.}
 

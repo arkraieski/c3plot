@@ -39,7 +39,8 @@ c3plot <- function(x, ...) {
 #' @param zoom logical; should the zooming feature (controlled by mouse wheel event) be enabled for the plot?
 #' @param col.group optionally, a factor the same length as \code{x} by which to group and color points.
 #' @param col The colors for the lines and points. If \code{col.group} is specified, this can be a vector of colors to use for each group in the data. If \code{NULL}, the C3 default colors are used.
-#' @param legend.title a title for the legend.
+#' @param legend.title a title for the legend. Defaults to a description of a description of \code{col.group} if not set. You can also use \code{legend.title = FALSE} to suppress to not show a title for the legend.
+#' @param legend.position Position of the plot legend. Possible values are "right", "inset", and "hide". This is ignored if all points are colored the same (i.e. no value was set for \code{col.group}); no legend will be shown in those instances.
 #' @param sci.x logical indicating whether scientific notation should be used for the x-axis.
 #' @param sci.y logical indicating whether scientific notation should be used for the x-axis.
 #' @param ... arguments passed to \code{\link[htmlwidgets:createWidget]{htmlwidgets::createWidget()}}: \code{width}, \code{height}, and \code{elementId}. These arguments default to NULL.
@@ -55,7 +56,7 @@ c3plot <- function(x, ...) {
 #' @importFrom gplots col2hex
 c3plot.default <- function(x, y, type  = "p", xlim = NULL, ylim = NULL, main = NULL, xlab = NULL,
                            ylab = NULL, zoom = TRUE, col.group = NULL,
-                           col = NULL, legend.title = NULL, sci.x = FALSE,
+                           col = NULL, legend.title = NULL, legend.position = "right",  sci.x = FALSE,
                            sci.y = FALSE, ...){
   if(type == "p"){
     plot_type <- "scatter"
@@ -146,6 +147,19 @@ c3plot.default <- function(x, y, type  = "p", xlim = NULL, ylim = NULL, main = N
 
   if(is.null(legend.title) & !is.null(col.group)) legend.title <- deparse(substitute(col.group))
 
+  if(!(legend.position %in% c("bottom", "right", "inset", "bottom"))) stop("legend position must be 'right', inset', or 'hide'")
+
+  if(legend.position == "bottom") warning("Using 'legend.position = \"bottom\"' is supported by C3.js, but is not recommended with c3plot() defaults. Consider setting legend.position to \"right\" for a cleaner plot. ")
+
+  # allow legend.title to be set to FALSE to explictly omit a legend title
+  # (overwriding the default c3plot() behavior of using the name of col.group as the legend title)
+  if(is.logical(legend.title) && isFALSE(legend.title)) legend.text <- NULL else legend.text <- legend.title
+
+  # build list of legend parameters to pass to JavaScript
+  legend <- list(text = legend.text,
+                 position = ifelse(legend.position == "hide", NULL, legend.position),
+                 hide = legend.position == "hide")
+
   data <- list(x = x,
                y = y,
                plot_type = plot_type,
@@ -159,7 +173,7 @@ c3plot.default <- function(x, y, type  = "p", xlim = NULL, ylim = NULL, main = N
                col_hex = col_hex,
                group_names = group_names,
                grouped_data = grouped_data,
-               leg = legend.title,
+               legend = legend,
                sci_x = sci.x,
                sci_y = sci.y)
 

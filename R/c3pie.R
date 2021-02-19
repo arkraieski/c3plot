@@ -6,6 +6,7 @@
 #' @param labels character vector giving names for the slices.
 #' @param col character vector of colors to be used in filling the slices. Can be a hex value or an R built-in color name.
 #' @param slice.text \code{"pct"} to display percentage-formatted values inside pie slices (default c3.js behavior) or \code{"id"} to display the slice's name from \code{labels} (note that this does not change labels' positioning within their slices, so using \code{slize.text = "id"} may result in poorly-placed or cut-off slice labels)
+#' @param legend.position Position of the legend. Possible values are \code{"right"}, \code{"bottom"}, \code{"inset"}, and \code{"hide"}.
 #' @param main a main title for the plot.
 #' @param width width of the widget to create for the plot. The default is NULL, which results in automatic resizing based on the plot's container.
 #' @param height height of the widget to create for the plot. The default is NULL, which results in automatic resizing based on the plot's container.
@@ -23,8 +24,10 @@
 #'                       "cornsilk", "cyan", "white"))
 #'
 #' @export
-c3pie <- function(x, labels = names(x), col = NULL, slice.text = "pct", main = NULL,
-                  width = NULL, height = NULL, elementId = NULL) {
+c3pie <- function(x, labels = names(x), col = NULL, slice.text = "pct",
+                  legend.position = "right", main = NULL, width = NULL,
+                  height = NULL, elementId = NULL) {
+
   if(length(x) !=  length(labels)){
     stop("x and labels must be the same length")
   }
@@ -58,13 +61,21 @@ c3pie <- function(x, labels = names(x), col = NULL, slice.text = "pct", main = N
 
     } else stop("labels must be 'pct' or 'id'")
 
+  if(!(legend.position %in% c("bottom", "right", "inset", "hide"))){
+    stop("legend position must be 'right', 'bottom', 'inset', or 'hide'")
+  }
+
+  legend <- list(position = ifelse(legend.position == "hide", NULL, legend.position),
+                 hide = legend.position == "hide")
+
   # forward options using x
   x <-  list(
     labels = labels,
     values = unname(x),
     colors = col_hexes,
     main = main,
-    label_function = label_function
+    label_function = label_function,
+    legend = legend
   )
 
   # create widget
