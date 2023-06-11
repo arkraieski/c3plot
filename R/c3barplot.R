@@ -17,7 +17,7 @@
 c3barplot <- function(heights, names.arg = NULL, col = NULL, main = NULL, ylab = NULL,
                       width = NULL, height = NULL, elementId = NULL, ...) {
 
-  if(!is.vector(heights || !is.numeric(heights))) {
+  if(!is.vector(heights) || !is.numeric(heights)) {
     stop("heights must be a numeric vector")
   }
 
