@@ -3,13 +3,16 @@
 
 # c3plot
 
+![GitHub Workflow
+Status](https://img.shields.io/github/actions/workflow/status/arkraieski/c3plot/check-standard.yaml)
+
 The goal of c3plot is provide to a base ‘graphics’-like interface to the
 [C3.js](https://c3js.org/) JavaScript charting library. The main
 `c3plot()` function is an S3 generic like the base `plot()` function
 with methods for various base R objects.
 
 Besides `htmlwidgets`, it has minimal R dependencies. Tidyverse not
-required\!
+required!
 
 ## Installation
 
@@ -48,12 +51,11 @@ methods(c3plot)
 #> see '?methods' for accessing help and source code
 ```
 
-More are on the way\! The goal is to replicate the behavior of base R
+More are on the way! The goal is to replicate the behavior of base R
 `plot()` methods as closely as possible while also getting the benefits
 of using C3 (ie. interactivity). Each method has its own help page that
 can be accessed for additional information.
 
 ## Testing
 
-Basic tests are implemented, but this is a WIP. The package is tested on
-Windows, Linux, and MacOS.
+The package is tested on Windows, Linux, and MacOS.
