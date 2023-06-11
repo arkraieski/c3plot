@@ -255,23 +255,33 @@ c3plot.function <-function(x, from = 0, to = 1, ylab = NULL, ...){
 #' @method c3plot lm
 #' @export
 #' @import stats
+#' @examples
+#' ## Analysis of the life-cycle savings data
+#' ## given in Belsley, Kuh and Welsch.
+#' lm.SR <- lm(sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings)
+#' c3plot(lm.SR)
+#'
 c3plot.lm <- function(x, which = 1, ...){
 
   if (!inherits(x, "lm")) {
     stop("use only with \"lm\" objects")
-    }
+  }
 
+  if(!is.numeric(which) || any(which != 1)) stop("1 is currently the only supported value for argument which")
+
+  #  Copyright (C) 1995-2023 The R Core Team
+  # adapted from R's plot.lm() method
 
   r <- if(inherits(x, "glm")) residuals(x, type="pearson") else residuals(x)
   yh <- predict(x) # != fitted() for glm
   w <- weights(x)
-  # if(!is.null(w)) { # drop obs with zero wt: PR#6640
-  #   wind <- w != 0
-  #   r <- r[wind]
-  #   yh <- yh[wind]
-  #   w <- w[wind]
-  #   labels.id <- labels.id[wind]
-  # }
+  if(!is.null(w)) { # drop obs with zero wt: PR#6640
+    wind <- w != 0
+    r <- r[wind]
+    yh <- yh[wind]
+    w <- w[wind]
+    #labels.id <- labels.id[wind]
+  }
 
   l.fit <- if (inherits(x, "glm")) "Predicted values" else "Fitted values"
 

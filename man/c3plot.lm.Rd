@@ -16,3 +16,10 @@
 \description{
 a plot of residuals against fitted values
 }
+\examples{
+## Analysis of the life-cycle savings data
+## given in Belsley, Kuh and Welsch.
+lm.SR <- lm(sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings)
+c3plot(lm.SR)
+
+}
