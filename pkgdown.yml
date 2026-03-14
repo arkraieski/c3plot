@@ -1,8 +1,7 @@
-pandoc: 2.19.2
-pkgdown: 2.0.7
+pandoc: 3.1.11
+pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
-  Benchmark: Benchmark.html
-  c3plot-getting-started: c3plot-getting-started.html
-last_built: 2023-06-12T01:48Z
-
+  articles/Benchmark: Benchmark.html
+  plotjs-getting-started: plotjs-getting-started.html
+last_built: 2026-03-14T05:18Z
