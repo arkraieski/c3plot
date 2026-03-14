@@ -2,24 +2,23 @@
 
 ## All functions
 
-- [`plotjsOutput()`](plotjs-shiny.md)
-  [`renderplotjs()`](plotjs-shiny.md) : Shiny bindings for plotjs
-- [`plotjs()`](plotjs.md) : Generic Plotting with 'Chart.js'
-- [`plotjs(`*`<default>`*`)`](plotjs.default.md) : The Default plotjs
+- [`c3barplotOutput()`](c3barplot-shiny.md)
+  [`renderC3barplot()`](c3barplot-shiny.md) : Shiny bindings for
+  c3barplot
+- [`c3barplot()`](c3barplot.md) : C3 Bar Plots
+- [`c3pieOutput()`](c3pie-shiny.md) [`renderC3pie()`](c3pie-shiny.md) :
+  Shiny bindings for c3pie
+- [`c3pie()`](c3pie.md) : C3 Pie Charts
+- [`c3plotOutput()`](c3plot-shiny.md)
+  [`renderc3plot()`](c3plot-shiny.md) : Shiny bindings for c3plot
+- [`c3plot()`](c3plot.md) : Generic Plotting with 'C3.js'
+- [`c3plot(`*`<default>`*`)`](c3plot.default.md) : The Default C3
   Scatterplot Function
-- [`plotjs(`*`<density>`*`)`](plotjs.density.md) : plotjs Method for
+- [`c3plot(`*`<density>`*`)`](c3plot.density.md) : c3plot Method for
   Kernel Density Estimation
-- [`plotjs(`*`<factor>`*`)`](plotjs.factor.md) : Factor Variable Bar
+- [`c3plot(`*`<factor>`*`)`](c3plot.factor.md) : Factor Variable Bar
   Plots
-- [`plotjs(`*`<function>`*`)`](plotjs.function.md) : Draw Function Plots
-  with 'Chart.js'
-- [`plotjs(`*`<lm>`*`)`](plotjs.lm.md) : plotjs Diagnostics for an lm
+- [`c3plot(`*`<function>`*`)`](c3plot.function.md) : Draw Function Plots
+  with 'C3.js'
+- [`c3plot(`*`<lm>`*`)`](c3plot.lm.md) : C3 Plot Diagnostics for an lm
   Object
-- [`plotjsbarplotOutput()`](plotjsbarplot-shiny.md)
-  [`renderPlotjsbarplot()`](plotjsbarplot-shiny.md) : Shiny bindings for
-  plotjsbarplot
-- [`plotjsbarplot()`](plotjsbarplot.md) : plotjs Bar Plots
-- [`plotjspieOutput()`](plotjspie-shiny.md)
-  [`renderPlotjspie()`](plotjspie-shiny.md) : Shiny bindings for
-  plotjspie
-- [`plotjspie()`](plotjspie.md) : plotjs Pie Charts

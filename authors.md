@@ -9,12 +9,12 @@
 
 ## Citation
 
-Kraieski A (2026). *plotjs: An R 'graphics'-like Interface to
-'Chart.js'*. R package version 0.1.0.
+Kraieski A (2026). *c3plot: An R 'graphics'-like Interface to 'C3.js'*.
+R package version 0.1.1.
 
     @Manual{,
-      title = {plotjs: An R 'graphics'-like Interface to 'Chart.js'},
+      title = {c3plot: An R 'graphics'-like Interface to 'C3.js'},
       author = {Alex Kraieski},
       year = {2026},
-      note = {R package version 0.1.0},
+      note = {R package version 0.1.1},
     }
