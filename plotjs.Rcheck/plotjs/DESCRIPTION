@@ -1,29 +1,27 @@
 Package: plotjs
 Type: Package
 Title: An R 'graphics'-like Interface to 'Chart.js'
+Version: 0.1.1
 Authors@R: c(person("Alex", "Kraieski", email = "arkraieski@gmail.com",
   role = c("aut", "cre")),
    person("R Core team", role = "ctb",
       comment = "Some code and examples extracted from base R 'plot()' methods"))
-Version: 0.1.0
-Description: A continuation of the author's earlier 'c3plot' project, create interactive plots
-    with the 'Chart.js' <https://www.chartjs.org/> charting library using an interface
-    modeled after that of base graphics. The main plotjs() function is an
+Description: Create interactive plots with the 'Chart.js' <https://www.chartjs.org/> charting library using 
+    an interface modeled after that of base graphics. The main plotjs() function is an
     S3 generic with methods for various R objects that work similarly to their equivalent plot() methods. 
     These plots can be embedded into 'Shiny' web applications
     or 'R Markdown' documents or displayed within the 'RStudio' 'Viewer' pane.
 License: GPL (>= 3)
 Encoding: UTF-8
-LazyData: true
 RoxygenNote: 7.3.2
 Imports: htmlwidgets, grDevices
-Suggests: 
-    testthat,
-    knitr,
-    rmarkdown,
-    gapminder,
-    plotly,
-    ggplot2,
-    microbenchmark,
-    dplyr
+Suggests: testthat, knitr, rmarkdown, gapminder, plotly, ggplot2,
+        microbenchmark, dplyr
 VignetteBuilder: knitr
+NeedsCompilation: no
+Packaged: 2026-03-14 04:50:54 UTC; alex
+Author: Alex Kraieski [aut, cre],
+  R Core team [ctb] (Some code and examples extracted from base R
+    'plot()' methods)
+Maintainer: Alex Kraieski <arkraieski@gmail.com>
+Built: R 4.4.2; ; 2026-03-14 04:51:03 UTC; unix
