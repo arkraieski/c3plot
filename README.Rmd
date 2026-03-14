@@ -14,11 +14,11 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 ```
-# plotjs
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/arkraieski/plotjs/check-standard.yaml)
+# c3plot
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/arkraieski/c3plot/check-standard.yaml)
 
 
-The goal of plotjs is to provide a base 'graphics'-like interface to the [Chart.js](https://www.chartjs.org/) JavaScript charting library. The main `plotjs()` function is an S3 generic like the base `plot()` function with methods for various base R objects.
+The goal of c3plot is provide to a base 'graphics'-like interface to the [C3.js](https://c3js.org/) JavaScript charting library. The main `c3plot()` function is an S3 generic like the base `plot()` function with methods for various base R objects.
 
 Besides `htmlwidgets`, it has minimal R dependencies. Tidyverse not required!
 
@@ -28,16 +28,16 @@ You can install the development version from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("arkraieski/plotjs")
+devtools::install_github("arkraieski/c3plot")
 ```
 ## Example
 
 Here’s some example code for a basic scatter plot using R’s `airquality` dataset:
 
 ```{r eval=FALSE}
-library(plotjs)
+library(c3plot)
 air <- airquality
-plotjs(air$Ozone, air$Solar.R, 
+c3plot(air$Ozone, air$Solar.R, 
        main = "New York Air Quality Measurements", 
        xlab = "Ozone (ppb)",
        ylab = "Solar Radiation (lang)",
@@ -51,11 +51,11 @@ plotjs(air$Ozone, air$Solar.R,
 To see a list of S3 methods:
 
 ```{r}
-library(plotjs)
-methods(plotjs)
+library(c3plot)
+methods(c3plot)
 ```
 
-More are on the way! The goal is to replicate the behavior of base R `plot()` methods as closely as possible while also getting the benefits of an interactive Chart.js-backed widget. Each method has its own help page that can be accessed for additional information.
+More are on the way! The goal is to replicate the behavior of base R `plot()` methods as closely as possible while also getting the benefits of using C3 (ie. interactivity). Each method has its own help page that can be accessed for additional information.
 
 
 ## Testing

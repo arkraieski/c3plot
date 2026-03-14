@@ -1,4 +1,4 @@
 library(testthat)
-library(plotjs)
+library(c3plot)
 
-test_check("plotjs")
+test_check("c3plot")

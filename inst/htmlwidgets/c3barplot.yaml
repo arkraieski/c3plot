@@ -1,0 +1,12 @@
+dependencies:
+ - name: d3
+   version: 5.16.0
+   src: htmlwidgets
+   script: ./lib/d3.min.js
+ - name: c3
+   version: 0.7.20
+   src: htmlwidgets
+   script: ./lib/c3.min.js
+   stylesheet:
+   - ./lib/c3.min.css
+   - ./lib/c3barplot.css

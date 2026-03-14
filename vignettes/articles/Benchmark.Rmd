@@ -17,10 +17,11 @@ knitr::opts_chunk$set(fig.width=5)
 ```
 ## Introduction
 
-The vignette benchmarks `plotjs` against various other plotting systems for R, namely `plotly`. Two basic plots will be used for this benchmark, a basic scatter plot and a grouped line plot. I am uncertain if JavaScript execution time is counted by `microbenchmark`. Even if we assume it isn't, the benchmark results are informative because it's always better if the R process gets tied up for less time per plot. First, let's load the visualization packages to compare:
+The vignette benchmarks `c3plot` against various other plotting systems for R, namely `plotly`. Two basic plots will be used for this benchmark, a basic scatter plot and a grouped line plot. I am uncertain if JavaScript execution time is counted by `microbenchmark`. Even if we assume it isn't, the benchmark results are informative because it's always better if the R process gets tied up for less time per plot. First, let's load the visualization packages to compare:
 
 ```{r}
-library(plotjs)
+library(c3plot)
+library(c3)
 library(plotly)
 library(ggplot2)
 ```
@@ -43,11 +44,11 @@ plot_base(gapminder)
 ```
 
 ```{r}
-plot_plotjs <- function(x){
+plot_c3plot <- function(x){
  
-  plotjs(x = x$gdpPercap, y = x$lifeExp, sci.x = TRUE)
+  c3plot(x = x$gdpPercap, y = x$lifeExp, sci.x = TRUE)
 }
-plot_plotjs(gapminder)
+plot_c3plot(gapminder)
 ```
 
 ```{r}
@@ -74,15 +75,25 @@ plot_ggplot <- function(x){
 plot_ggplot(gapminder)
 ```
 
+
+```{r}
+plot_c3 <- function(x){
+ c3(x, x = "gdpPercap", y = "lifeExp") %>%
+    c3_scatter()
+}
+plot_c3(gapminder)
+```
+
 Now, these functions are benchmarked:
 
 ```{r echo = T, fig.show='hide'}
 library(microbenchmark)
 m <- microbenchmark(base = plot_base(gapminder),
-               plotjs = plot_plotjs(gapminder),
+               c3plot = plot_c3plot(gapminder),
                plotly = plot_plotly(gapminder),
                ggplotly = plot_ggplotly(gapminder),
                ggplot = plot_ggplot(gapminder),
+              c3 = plot_c3(gapminder),
                unit = "ms",
                times = 50)
 ```
@@ -91,30 +102,30 @@ m <- microbenchmark(base = plot_base(gapminder),
 m
 ```
 
-On my main development machine, plotjs was the quickest by an order of magnitude. This can vary, but `plotly` is roughly 20 times slower, and `ggplotly()` is hundreds of times slower. However, `plotly` was still quick enough that the performance difference with `plotjs` would be imperceptible to users.
+On my main development machine, c3plot was the quickest by an order of magnitude. This can vary, but `plotly` is roughly 20 times slower, and `ggplotly()` is hundreds of times slower. However, `plotly` was still quick enough that the performance difference with `c3plot` would be imperceptible to users.
 
 ```{r}
 plot(m)
 ```
 
 
-Let's look at kernel density plots of the time distributions for `plotjs` and `plotly`.
+Let's look at kernel density plots of the time distributions for `c3plot` and `plotly`.
 
 ```{r}
-density_plotjs <- density(m$time[m$expr == "plotjs"])
-plotjs(density_plotjs)
+density_c3plot <- density(m$time[m$expr == "c3plot"])
+c3plot(density_c3plot)
 ```
 
 
 ```{r}
 density_plotly <- density(m$time[m$expr == "plotly"])
-plotjs(density_plotly)
+c3plot(density_plotly)
 ```
 
-Let's use a two-sample Wilcoxon test to compare the means of execution time for plotjs and plotly. A t-test would not be suitable because we cannot assume normality. The null hypothesis is that `plotjs` and `plotly` will have the same mean execution time for these scatter plots.
+Let's use a two-sample Wilcoxon test to compare the means of execution time for c3plot and plotly. A t-test would not be suitable because we cannot assume normality. The null hypothesis is that `c3plot` and `plotly` will have the same mean execution time for these scatter plots.
 
 ```{r}
-w <- wilcox.test(m$time[m$expr == "plotjs"],
+w <- wilcox.test(m$time[m$expr == "c3plot"],
                  m$time[m$expr == "plotly"],
                  alternative = "less",
                  paired = FALSE)
@@ -130,7 +141,7 @@ ifelse(w$p.value < .05, "yes", "no")
 
 ## Grouped Line plots
 
-Making line plots colored by group is a common plotting task that could potentially expose some slowness in `plotjs`. We will make line plots of the total GDP by continent by year. First, we must summarize the data and define functions for making this lineplot with various packages.
+Making line plots colored by group is a common plotting task that could potentially expose some slowness in `c3plot`. We will make line plots of the total GDP by continent by year. First, we must summarize the data and define functions for making this lineplot with various packages.
 
 ```{r}
 library(dplyr)
@@ -143,13 +154,13 @@ plot_title <- "Total GDP by Continent 1952 - 2007"
 ```
 
 ```{r}
-plotjs_line <- function(x){
-  plotjs(x$year, x$total_gdp, col.group = x$continent, sci.y = TRUE, 
+c3plot_line <- function(x){
+  c3plot(x$year, x$total_gdp, col.group = x$continent, sci.y = TRUE, 
          type = "l", main = plot_title, xlab = "Year", ylab = "GDP",
          legend.title = "Continent")
 }
 
-plotjs_line(gdp_cont)
+c3plot_line(gdp_cont)
 ```
 
 
@@ -188,7 +199,7 @@ plotly_line(gdp_cont)
 Now let's benchmark these line plot functions:
 
 ```{r, echo=T, fig.show="hide"}
-m2 <- microbenchmark(plotjs = plotjs_line(gdp_cont),
+m2 <- microbenchmark(c3plot = c3plot_line(gdp_cont),
                      ggplotly = ggplotly_line(gdp_cont),
                      plotly = plotly_line(gdp_cont),
                      ggplot = ggplot_line(gdp_cont),
@@ -208,20 +219,20 @@ plot(m2)
 Let's perform the same test as before:
 
 ```{r}
-w2 <- wilcox.test(m2$time[m2$expr == "plotjs"],
+w2 <- wilcox.test(m2$time[m2$expr == "c3plot"],
                  m2$time[m2$expr == "plotly"],
                  alternative = "less",
                  paired = FALSE)
 w2
 ```
 
-Can we reject the null hypothesis that plotjs and plotly have the same mean?
+Can we reject the null hypothesis that c3 and plotly have the same mean?
 ```{r}
 ifelse(w2$p.value < .05, "yes", "no")
 ```
 
 ## Conclusions
 
-Although benchmark results will vary on different systems, the results on my development machine indicate that plotjs is faster than plotly (and others) for both the scatter plot and grouped line plot tested. Although statistically significant, the difference in performance between plotjs and plotly would almost certainly never be perceptible to users.
+Although benchmark results will vary on different systems, the results on my development machine indicate that c3plot is faster than plotly (and others) for both the scatter plot and grouped line plot tested. Although statistically significant, the difference in performance between c3plot and plotly would almost certainly never be perceptible to users.
 
-Both plotjs and direct use of plotly potentially offer perceptible performance improvements over using `ggplotly()` to generate interactive visualizations. Shiny developers may find this information useful.
+Both c3plot and direct use of plotly potentially offer perceptible performance improvements over using `ggplotly()` to generate interactive visualizations. Shiny developers may find this information useful.
